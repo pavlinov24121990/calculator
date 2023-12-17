@@ -1,10 +1,12 @@
 'use client'
+// не разносил функции по хелперам (потому что, необходимо написать комментарии что бы было понятно, так же не разносил по компонентам)
 import { useEffect, useState } from 'react';
-
+// назначение типов TS
 type Operation = "+" | "—" | "x" | "÷" | "%" | null;
 type MR = "MR" | "MR+" | "MR-" | null
 
 const Home: React.FC = () => {
+  // создание стейтов с определением типа и дефолтного значения
   const [number1, setNumber1] = useState<string>("0")
   const [number2, setNumber2] = useState<string>("0")
   const [answer, setAnswer] = useState<string | Operation>(number1)
@@ -13,11 +15,11 @@ const Home: React.FC = () => {
   const [activeButton, setActiveButton] = useState<string | null>(null);
   const [reset, setReset] = useState<string>("AC");
   const [safeNumbers, setSafeNumbers] = useState<number[]>([]);
-
+// функция запоминание чисел - сохраняет числа в стейт массив МR
   const safeMRNumber = (): void => {
     setSafeNumbers((prevNumbers) => answer ? [...prevNumbers, parseFloat(answer.replace(',', '.'))] : [...prevNumbers, 0]);
   };
-
+// функция запоминание чисел - производит расчёты, очищает стейты, записывает результаты
   function calculateMR(operatorMR: string, safeNumbers: number[]): void {
     switch (operatorMR) {
       case "MR":
@@ -41,11 +43,11 @@ const Home: React.FC = () => {
       throw new Error("Неизвестный оператор");
     }
   };
-
+// функция меняет классы у кнопок Оператора (правый блок)
   const handleButtonClick = (button: string | null): void => {
     setActiveButton(button);
   };
-
+// функция для установки отрицательного числа
   const NegativeNumbers = (): void => {
     if (operator === null) {
       setNumber1((prevNumber) => (prevNumber.includes('-') ? prevNumber.replace(/-/g, '') : `-${prevNumber}` ));
@@ -53,7 +55,7 @@ const Home: React.FC = () => {
       setNumber2((prevNumber) => (prevNumber.includes('-') ? prevNumber.replace(/-/g, '') : `-${prevNumber}` ));
     }
   };
-
+// функция производит расчёты числе с процентами
   const interestCalculation = (operator: Operation, number1: number, number2: number): number => {
     switch (operator) {
       case "+":
@@ -68,7 +70,7 @@ const Home: React.FC = () => {
         throw new Error("Неизвестный оператор");
     }
   };
-
+// функция производит расчёты числе с операторами (+, -, *, /)
   function calculate(operator: Operation, number1: number, number2: number): number {
     switch (operator) {
       case "+":
@@ -87,7 +89,7 @@ const Home: React.FC = () => {
         throw new Error("Неизвестный оператор");
     }
   };
-  
+  // функция записывает в стейт первое и второе число с валидацией
   const saveNumberClick = (number: string): void => {
     const validateNumber = ["0", '1', '2', '3', "4", "5", "6", "7", "8", "9", "-"]
     if (operator === null) {
@@ -105,6 +107,7 @@ const Home: React.FC = () => {
       });
     }
   };
+  // Хук обновляет значение стейтов для своевременного отображение на экране + меняет , на . для корретного вычесления
   useEffect(() => {
     if (operator === null) {
       setAnswer(number1.replace('.', '‚'));
@@ -112,11 +115,11 @@ const Home: React.FC = () => {
       setAnswer(number2.replace('.', '‚'))
     }
   }, [number1, number2]);
-
+//  функция которая записывает опреторы в стейт
   const saveOperatorClick = (operator: Operation): void => {
     setOperator(operator)
   };
-
+// функция очистки стейтов (зброс калькулятора)
   const clearAllState = (): void => {
     setNumber1("0")
     setAnswer(number1)
@@ -125,7 +128,7 @@ const Home: React.FC = () => {
     setPercent(false)
     setReset("AC")
   };
-
+// функция (=) которая вызывает функции для расчёта и обновляет нужные стейты с преобразованием в нужный формат
   const equals = (percent: boolean, operator: Operation, number1: string, number2: string): void => {
     try {
       if (!operator || !number1 || !number2) {
@@ -146,7 +149,7 @@ const Home: React.FC = () => {
       console.error('Ошибка');
     }
   };
-
+// HTML код
   return (
     <main>
       <div className="display">
