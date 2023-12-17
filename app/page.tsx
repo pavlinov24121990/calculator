@@ -15,6 +15,7 @@ const Home: React.FC = () => {
   const [activeButton, setActiveButton] = useState<string | null>(null);
   const [reset, setReset] = useState<string>("AC");
   const [safeNumbers, setSafeNumbers] = useState<number[]>([]);
+  const [errors, setErrors] = useState<string>("");
 // функция запоминание чисел - сохраняет числа в стейт массив МR
   const safeMRNumber = (): void => {
     setSafeNumbers((prevNumbers) => answer ? [...prevNumbers, parseFloat(answer.replace(',', '.'))] : [...prevNumbers, 0]);
@@ -27,12 +28,16 @@ const Home: React.FC = () => {
         clearAllState()
         break;
       case "MR+":
-        const result = safeNumbers.reduce((sum, num) => sum + num).toString()
-        setNumber1(result)
-        setSafeNumbers([])
+        if (safeNumbers.length < 2) {
+          setErrors("Для операции MR+ требуется как минимум два числа")
+        }
+          const result = safeNumbers.reduce((sum, num) => sum + num).toString()
+          setNumber1(result)
+          setSafeNumbers([])
         break;
       case "MR-":
         if (safeNumbers.length < 2) {
+          setErrors("Для операции MR- требуется как минимум два числа")
           throw new Error("Для операции MR- требуется как минимум два числа");
         }
         const results = safeNumbers.reduce((result, num) => result - num).toString()
@@ -83,6 +88,7 @@ const Home: React.FC = () => {
         if (number2 !== 0) {
             return number1 / number2;
         } else {
+            setErrors("Деление на ноль невозможно")
             throw new Error("Деление на ноль невозможно");
         }
         default:
@@ -127,6 +133,7 @@ const Home: React.FC = () => {
     setOperator(null)
     setPercent(false)
     setReset("AC")
+    setErrors("")
   };
 // функция (=) которая вызывает функции для расчёта и обновляет нужные стейты с преобразованием в нужный формат
   const equals = (percent: boolean, operator: Operation, number1: string, number2: string): void => {
@@ -152,8 +159,8 @@ const Home: React.FC = () => {
 // HTML код
   return (
     <main>
-      <div className="display">
-        {answer}
+      <div className={errors ? "errors display" : "display"}>
+        {errors ? <span className='errors'>{errors}</span> : answer}
       </div>
       <div className='main-conteiner'>
         <div className="panel-conteiner">

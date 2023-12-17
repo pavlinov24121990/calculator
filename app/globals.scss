@@ -15,7 +15,6 @@ main {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
   .display {
     display: flex;
     align-items: flex-end;
@@ -25,6 +24,10 @@ main {
     color: white;
     margin: 0px 0px 20px 0px;
     font-size: 50px;
+    .errors {
+      color: red;
+      font-size: 24px;
+    }
   }
   .button-operator,
   .button-panel {
@@ -139,53 +142,18 @@ main {
   }
 }
 
-@media only screen and (max-width: 480px) and (max-height: 667px) {
+//
+
+@media only screen and (max-width: 375px) and (max-width: 376px) and (max-height: 667px) {
   main {
     .display {
       height: 25vh;
-      font-size: 50px;
-      margin: 0px;
-      align-items: flex-end;
-      margin-bottom: 20px;
     }
     .button-operator,
     .button-panel {
       width: 65px;
       height: 65px;
-      font-size: 28px;
-    }
-    .main-conteiner {
-      .panel-conteiner {
-        ul {
-          li {
-            &:nth-child(1),
-            &:nth-child(2),
-            &:nth-child(3) {
-              button {
-                font-size: 20px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 390px) and (max-height: 844px) {
-  main {
-    .display {
-      height: 40vh;
-      font-size: 50px;
-      margin: 0px;
-      align-items: flex-end;
-      margin-bottom: 20px;
-    }
-    .button-operator,
-    .button-panel {
-      width: 65px;
-      height: 65px;
-      font-size: 34px;
+      font-size: 30px;
     }
     .main-conteiner {
       .panel-conteiner {
@@ -205,85 +173,16 @@ main {
   }
 }
 
-@media only screen and (min-width: 414px) and (max-width: 767px) and (max-height: 896px) {
+@media only screen and (min-width: 414px) and (max-width: 736px) {
   main {
     .display {
-      height: 40vh;
-      font-size: 60px;
-      margin: 0px;
-      align-items: flex-end;
-      margin-bottom: 30px;
-    }
-    .button-operator,
-    .button-panel {
-      width: 70px;
-      height: 70px;
-      font-size: 34px;
-    }
-    .main-conteiner {
-      .panel-conteiner {
-        ul {
-          li {
-            &:nth-child(1),
-            &:nth-child(2),
-            &:nth-child(3) {
-              button {
-                font-size: 28px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 1023px) {
-  main {
-    .display {
-      height: 25vh;
-      font-size: 50px;
-      margin: 0px;
-      align-items: center;
-    }
-    .button-operator,
-    .button-panel {
-      width: 70px;
-      height: 70px;
-      font-size: 34px;
-    }
-    .main-conteiner {
-      .panel-conteiner {
-        ul {
-          li {
-            &:nth-child(1),
-            &:nth-child(2),
-            &:nth-child(3) {
-              button {
-                font-size: 28px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 430px) and (max-height: 932px) {
-  main {
-    .display {
-      height: 40vh;
-      font-size: 50px;
-      margin: 0px;
-      align-items: flex-end;
-      margin-bottom: 20px;
+      height: 35vh;
     }
     .button-operator,
     .button-panel {
       width: 75px;
       height: 75px;
-      font-size: 34px;
+      font-size: 38px;
     }
     .main-conteiner {
       .panel-conteiner {
@@ -293,7 +192,94 @@ main {
             &:nth-child(2),
             &:nth-child(3) {
               button {
-                font-size: 28px;
+                font-size: 30px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 376px) and (max-width: 812px) {
+  main {
+    .display {
+      height: 35vh;
+    }
+    .button-operator,
+    .button-panel {
+      width: 75px;
+      height: 75px;
+      font-size: 38px;
+    }
+    .main-conteiner {
+      .panel-conteiner {
+        ul {
+          li {
+            &:nth-child(1),
+            &:nth-child(2),
+            &:nth-child(3) {
+              button {
+                font-size: 30px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 414px) and (max-width: 896px) {
+  main {
+    .display {
+      height: 35vh;
+    }
+    .button-operator,
+    .button-panel {
+      width: 75px;
+      height: 75px;
+      font-size: 38px;
+    }
+    .main-conteiner {
+      .panel-conteiner {
+        ul {
+          li {
+            &:nth-child(1),
+            &:nth-child(2),
+            &:nth-child(3) {
+              button {
+                font-size: 30px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 414px) and (max-width: 896px) and (min-height: 896px) {
+  main {
+    .display {
+      height: 35vh;
+    }
+    .button-operator,
+    .button-panel {
+      width: 75px;
+      height: 75px;
+      font-size: 38px;
+    }
+    .main-conteiner {
+      .panel-conteiner {
+        ul {
+          li {
+            &:nth-child(1),
+            &:nth-child(2),
+            &:nth-child(3) {
+              button {
+                font-size: 30px;
               }
             }
           }
