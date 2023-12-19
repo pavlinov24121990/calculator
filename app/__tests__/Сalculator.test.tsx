@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import Home from '../page'; // Adjust the path accordingly
+import Home from '../page';
 
 test('calculates addition correctly', () => {
   render(<Home />);

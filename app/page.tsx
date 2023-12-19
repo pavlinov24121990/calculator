@@ -1,12 +1,12 @@
 'use client'
-// не разносил функции по хелперам (потому что, необходимо написать комментарии что бы было понятно, так же не разносил по компонентам)
 import { useEffect, useState } from 'react';
 import { safeMRNumber } from './helpers/safeMRNumber';
 import { NegativeNumbers } from './helpers/NegativeNumbers'
 import { interestCalculation } from './helpers/interestCalculation';
 import { saveNumberClick } from './helpers/saveNumberClick';
 import { equals } from './helpers/equals';
-// назначение типов TS
+
+// назначение типов TS, создание масивов
 export type Operation = "+" | "—" | "x" | "÷" | "%" | null;
 type MR = "MR" | "MR+" | "MR-" | null;
 const MRs = ["MR", "MR+", "MR-"];
@@ -14,6 +14,7 @@ const numbers = ["7", "8", "9", "4", "5", "6", "1", "2", "3", "0", ","]
 const operators = ["÷", "x", "—", "+"];
 
 const Сalculator: React.FC = () => {
+
   // создание стейтов с определением типа и дефолтного значения
   const [numberFirst, setNumberFirst] = useState<string>("0")
   const [numberSecond, setNumberSecond] = useState<string>("0")
@@ -53,7 +54,7 @@ const Сalculator: React.FC = () => {
     }
   };
   
-  // Хук обновляет значение стейтов для своевременного отображение на экране + меняет , на . для корретного вычесления
+  // Хук обновляет значение стейтов для своевременного отображение на экране + меняет . на , для корретного отображения
   useEffect(() => {
     setAnswer((operator ? numberSecond : numberFirst).replace('.', '‚'));
   }, [numberFirst, numberSecond, operator]);
