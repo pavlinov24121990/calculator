@@ -3,15 +3,17 @@
 import { useEffect, useState } from 'react';
 // назначение типов TS
 type Operation = "+" | "—" | "x" | "÷" | "%" | null;
-type MR = "MR" | "MR+" | "MR-" | null
+type MR = "MR" | "MR+" | "MR-" | null;
+const validateNumber = ["0", '1', '2', '3', "4", "5", "6", "7", "8", "9", "-"];
+const MRs = ["MR", "MR+", "MR-"];
+const numbers = ["7", "8", "9", "4", "5", "6", "1", "2", "3", "0", ","]
 
 const Home: React.FC = () => {
   // создание стейтов с определением типа и дефолтного значения
-  const [number1, setNumber1] = useState<string>("0")
-  const [number2, setNumber2] = useState<string>("0")
-  const [answer, setAnswer] = useState<string | Operation>(number1)
+  const [numberFirst, setNumberFirst] = useState<string>("0")
+  const [numberSecond, setNumberSecond] = useState<string>("0")
+  const [answer, setAnswer] = useState<string | Operation>(numberFirst)
   const [operator, setOperator] = useState<Operation>(null);
-  const [percent, setPercent] = useState<boolean>(false);
   const [activeButton, setActiveButton] = useState<string | null>(null);
   const [reset, setReset] = useState<string>("AC");
   const [safeNumbers, setSafeNumbers] = useState<number[]>([]);
@@ -32,7 +34,7 @@ const Home: React.FC = () => {
           setErrors("Для операции MR+ требуется как минимум два числа")
         }
           const result = safeNumbers.reduce((sum, num) => sum + num).toString()
-          setNumber1(result)
+          setNumberFirst(result)
           setSafeNumbers([])
         break;
       case "MR-":
@@ -41,7 +43,7 @@ const Home: React.FC = () => {
           throw new Error("Для операции MR- требуется как минимум два числа");
         }
         const results = safeNumbers.reduce((result, num) => result - num).toString()
-        setNumber1(results)
+        setNumberFirst(results)
         setSafeNumbers([])
         break;
       default:
@@ -55,38 +57,27 @@ const Home: React.FC = () => {
 // функция для установки отрицательного числа
   const NegativeNumbers = (): void => {
     if (operator === null) {
-      setNumber1((prevNumber) => (prevNumber.includes('-') ? prevNumber.replace(/-/g, '') : `-${prevNumber}` ));
+      setNumberFirst((prevNumber) => (prevNumber.includes('-') ? prevNumber.replace(/-/g, '') : `-${prevNumber}` ));
     } else {
-      setNumber2((prevNumber) => (prevNumber.includes('-') ? prevNumber.replace(/-/g, '') : `-${prevNumber}` ));
+      setNumberSecond((prevNumber) => (prevNumber.includes('-') ? prevNumber.replace(/-/g, '') : `-${prevNumber}` ));
     }
   };
 // функция производит расчёты числе с процентами
-  const interestCalculation = (operator: Operation, number1: number, number2: number): number => {
-    switch (operator) {
-      case "+":
-        return number1 + (number1 * (number2 / 100));
-      case "—":
-        return number1 - (number1 * (number2 / 100));
-      case "x":
-        return number1 * (number1 * (number2 / 100));
-      case "÷":
-        return number1 / (number1 * (number2 / 100));
-      default:
-        throw new Error("Неизвестный оператор");
-    }
+  const interestCalculation = (): void => {
+    operator ? setNumberSecond((parseFloat(numberFirst.replace(',', '.')) * (parseFloat(numberSecond.replace(',', '.')) / 100)).toString()) : setNumberFirst((parseFloat(numberFirst.replace('‚', '.')) / 100).toString())
   };
 // функция производит расчёты числе с операторами (+, -, *, /)
-  function calculate(operator: Operation, number1: number, number2: number): number {
+  function calculate(operator: Operation, numberFirst: number, numberSecond: number): number {
     switch (operator) {
       case "+":
-        return number1 + number2;
+        return numberFirst + numberSecond;
       case "—":
-        return number1 - number2;
+        return numberFirst - numberSecond;
       case "x":
-        return number1 * number2;
+        return numberFirst * numberSecond;
       case "÷":
-        if (number2 !== 0) {
-            return number1 / number2;
+        if (numberSecond !== 0) {
+            return numberFirst / numberSecond;
         } else {
             setErrors("Деление на ноль невозможно")
             throw new Error("Деление на ноль невозможно");
@@ -97,16 +88,15 @@ const Home: React.FC = () => {
   };
   // функция записывает в стейт первое и второе число с валидацией
   const saveNumberClick = (number: string): void => {
-    const validateNumber = ["0", '1', '2', '3', "4", "5", "6", "7", "8", "9", "-"]
     if (operator === null) {
-      setNumber1((prevNumber) => {
+      setNumberFirst((prevNumber) => {
         const isValidNumber = prevNumber.split('').every((char) => validateNumber.includes(char));
         const updatedNumber = /^-?0$/.test(prevNumber) && isValidNumber && number !== "," ? prevNumber.replace('0', "") : prevNumber;
         return updatedNumber + number.replace('‚', '.');
       });
       setReset("C");
     } else {
-      setNumber2((prevNumber) => {
+      setNumberSecond((prevNumber) => {
         const isValidNumber = prevNumber.split('').every((char) => validateNumber.includes(char));
         const updatedNumber = /^-?0$/.test(prevNumber) && isValidNumber && number !== "," ? prevNumber.replace('0', "") : prevNumber;
         return updatedNumber + number.replace('‚', '.');
@@ -116,42 +106,38 @@ const Home: React.FC = () => {
   // Хук обновляет значение стейтов для своевременного отображение на экране + меняет , на . для корретного вычесления
   useEffect(() => {
     if (operator === null) {
-      setAnswer(number1.replace('.', '‚'));
+      setAnswer(numberFirst.replace('.', '‚'));
     } else {
-      setAnswer(number2.replace('.', '‚'))
+      setAnswer(numberSecond.replace('.', '‚'))
     }
-  }, [number1, number2]);
+  }, [numberFirst, numberSecond]);
 //  функция которая записывает опреторы в стейт
   const saveOperatorClick = (operator: Operation): void => {
     setOperator(operator)
   };
 // функция очистки стейтов (зброс калькулятора)
   const clearAllState = (): void => {
-    setNumber1("0")
-    setAnswer(number1)
-    setNumber2("0")
+    setNumberFirst("0")
+    setAnswer(numberFirst)
+    setNumberSecond("0")
     setOperator(null)
-    setPercent(false)
     setReset("AC")
     setErrors("")
   };
 // функция (=) которая вызывает функции для расчёта и обновляет нужные стейты с преобразованием в нужный формат
-  const equals = (percent: boolean, operator: Operation, number1: string, number2: string): void => {
+  const equals = (operator: Operation, numberFirst: string, numberSecond: string): void => {
     try {
-      if (!operator || !number1 || !number2) {
+      if (!operator || !numberFirst || !numberSecond) {
         return;
       }
 
       const parseNumber = (num: string) => parseFloat(num.replace(',', '.'));
 
-      const result = percent
-        ? interestCalculation(operator, parseNumber(number1), parseNumber(number2))
-        : calculate(operator, parseNumber(number1), parseNumber(number2));
+      const result = calculate(operator, parseNumber(numberFirst), parseNumber(numberSecond));
       
-      setNumber1(result.toString().replace('.', '‚'));
-      setNumber2("0");
+      setNumberFirst(result.toString().replace('.', '‚'));
+      setNumberSecond("0");
       setOperator(null);
-      setPercent(false);
     } catch (error) {
       console.error('Ошибка');
     }
@@ -165,7 +151,7 @@ const Home: React.FC = () => {
       <div className='main-conteiner'>
         <div className="panel-conteiner">
           <ul>
-            {["MR", "MR+", "MR-"].map((MR) => (
+            {MRs.map((MR) => (
               <li key={MR}>
                 <button className='button-panel' onClick={() => calculateMR(MR ?? "" as MR, safeNumbers)}>{MR}</button>
               </li>
@@ -178,8 +164,8 @@ const Home: React.FC = () => {
                 <span>-</span>
               </button>
             </li>
-            <li><button onClick={() => setPercent(true)} className='button-panel'>%</button></li>
-            {["7", "8", "9", "4", "5", "6", "1", "2", "3", "0", ","].map((number) => (
+            <li><button onClick={() => interestCalculation()} className='button-panel'>%</button></li>
+            {numbers.map((number) => (
               <li key={number}>
                 <button className='button-panel' onClick={() => { saveNumberClick(number); handleButtonClick(null) }}>{number}</button>
               </li>
@@ -194,7 +180,7 @@ const Home: React.FC = () => {
               </li>
             ))}
             <li>
-              <button className="button-operator" onClick={() => { equals(percent, operator, number1, number2); handleButtonClick(null) }}>=</button>
+              <button className="button-operator" onClick={() => { equals(operator, numberFirst, numberSecond); handleButtonClick(null) }}>=</button>
             </li>
           </ul>
         </div>
