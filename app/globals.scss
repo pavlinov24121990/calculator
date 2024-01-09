@@ -142,15 +142,15 @@ main {
   }
 }
 
-@media only screen and (max-width: 375px) and (max-width: 736px) {
+@media only screen and (min-width: 320px) and (max-width: 374px) {
   main {
     .display {
-      height: 25vh;
+      height: 35vh;
     }
     .button-operator,
     .button-panel {
-      width: 65px;
-      height: 65px;
+      width: 60px;
+      height: 60px;
       font-size: 30px;
     }
     .main-conteiner {
@@ -161,36 +161,12 @@ main {
             &:nth-child(2),
             &:nth-child(3) {
               button {
-                font-size: 24px;
+                font-size: 25px;
               }
             }
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (min-width: 376px) and (max-width: 812px) {
-  main {
-    .display {
-      height: 35vh;
-    }
-    .button-operator,
-    .button-panel {
-      width: 75px;
-      height: 75px;
-      font-size: 38px;
-    }
-    .main-conteiner {
-      .panel-conteiner {
-        ul {
-          li {
-            &:nth-child(1),
-            &:nth-child(2),
-            &:nth-child(3) {
+            &:nth-last-child(2) {
               button {
-                font-size: 30px;
+                width: 140px;
               }
             }
           }
@@ -200,65 +176,7 @@ main {
   }
 }
 
-@media only screen and (min-width: 414px) and (max-width: 896px) {
-  main {
-    .display {
-      height: 35vh;
-    }
-    .button-operator,
-    .button-panel {
-      width: 75px;
-      height: 75px;
-      font-size: 38px;
-    }
-    .main-conteiner {
-      .panel-conteiner {
-        ul {
-          li {
-            &:nth-child(1),
-            &:nth-child(2),
-            &:nth-child(3) {
-              button {
-                font-size: 30px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (min-width: 414px) and (max-width: 896px) and (min-height: 896px) {
-  main {
-    .display {
-      height: 35vh;
-    }
-    .button-operator,
-    .button-panel {
-      width: 75px;
-      height: 75px;
-      font-size: 38px;
-    }
-    .main-conteiner {
-      .panel-conteiner {
-        ul {
-          li {
-            &:nth-child(1),
-            &:nth-child(2),
-            &:nth-child(3) {
-              button {
-                font-size: 30px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape) {
+@media only screen and (min-device-width: 320px) and (max-device-width: 1440px) and (orientation: landscape) {
   main {
     display: flex;
     justify-content: center;
@@ -269,297 +187,10 @@ main {
       align-items: flex-end;
       justify-content: flex-end;
       width: 620px;
-      height: 30vh;
+      height: 25vh;
       color: white;
       font-size: 50px;
-      .errors {
-        color: red;
-        font-size: 24px;
-      }
-    }
-    .button-operator,
-    .button-panel {
-      width: 65px;
-      background-color: rgb(63, 39, 39);
-      color: white;
-      height: 65px;
-      border-radius: 50%;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      position: relative;
-      &:hover {
-        background-color: rgb(167, 102, 102);
-      }
-      span {
-        top: 50%;
-        left: 50%;
-        position: absolute;
-        color: black;
-        &:first-child {
-          top: 14px;
-          left: 16px;
-        }
-        &:nth-last-child(2) {
-          transform: translate(-50%, -50%) rotate(20deg);
-        }
-        &:last-child {
-          top: 19px;
-          right: 15px;
-        }
-      }
-    }
-    .main-conteiner {
-      display: flex;
-      justify-content: center;
-      align-items: end;
-      .panel-conteiner {
-        margin-right: 10px;
-        ul {
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          grid-gap: 10px;
-          list-style: none;
-          padding: 0;
-          li {
-            &:nth-child(1),
-            &:nth-child(2),
-            &:nth-child(3) {
-              button {
-                font-size: 20px;
-              }
-            }
-            &:nth-child(4),
-            &:nth-child(5),
-            &:nth-child(6) {
-              button {
-                color: black;
-                background-color: rgb(206, 170, 170);
-                transition: background-color 0.3s;
-                &:hover {
-                  background-color: rgb(233, 217, 217);
-                }
-              }
-            }
-            &:nth-last-child(2) {
-              grid-column: span 2;
-              button {
-                width: 100%;
-                border-radius: 130px;
-                text-align: start;
-                padding-left: 30px;
-              }
-            }
-          }
-        }
-      }
-    }
-    .operator-container {
-      ul {
-        padding: 0px;
-        list-style: none;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 10px;
-        li {
-          margin: 0px;
-          &:last-child {
-            grid-column: span 2;
-            button {
-              width: 100%;
-              border-radius: 130px;
-            }
-          }
-          &:nth-last-child(4) {
-            button {
-              font-size: 20px;
-            }
-          }
-          &:nth-last-child(3) {
-            button {
-              font-size: 27px;
-            }
-          }
-          .active {
-            background-color: cyan;
-            color: rgb(245, 202, 10);
-          }
-          button {
-            background-color: rgb(245, 202, 10);
-            transition: background-color 0.3s, color 0.3s;
-            &:hover {
-              background-color: cyan;
-              color: rgb(245, 202, 10);
-            }
-            &:nth-last-child(3) {
-              font-size: 27px;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (min-device-width: 414px) and (max-device-width: 896px) and (orientation: landscape) {
-  main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    .display {
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      width: 620px;
-      height: 30vh;
-      color: white;
-      font-size: 50px;
-      .errors {
-        color: red;
-        font-size: 24px;
-      }
-    }
-    .button-operator,
-    .button-panel {
-      width: 65px;
-      background-color: rgb(63, 39, 39);
-      color: white;
-      height: 65px;
-      border-radius: 50%;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      position: relative;
-      &:hover {
-        background-color: rgb(167, 102, 102);
-      }
-      span {
-        top: 50%;
-        left: 50%;
-        position: absolute;
-        color: black;
-        &:first-child {
-          top: 14px;
-          left: 16px;
-        }
-        &:nth-last-child(2) {
-          transform: translate(-50%, -50%) rotate(20deg);
-        }
-        &:last-child {
-          top: 19px;
-          right: 15px;
-        }
-      }
-    }
-    .main-conteiner {
-      display: flex;
-      justify-content: center;
-      align-items: end;
-      .panel-conteiner {
-        margin-right: 10px;
-        ul {
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          grid-gap: 10px;
-          list-style: none;
-          padding: 0;
-          li {
-            &:nth-child(1),
-            &:nth-child(2),
-            &:nth-child(3) {
-              button {
-                font-size: 20px;
-              }
-            }
-            &:nth-child(4),
-            &:nth-child(5),
-            &:nth-child(6) {
-              button {
-                color: black;
-                background-color: rgb(206, 170, 170);
-                transition: background-color 0.3s;
-                &:hover {
-                  background-color: rgb(233, 217, 217);
-                }
-              }
-            }
-            &:nth-last-child(2) {
-              grid-column: span 2;
-              button {
-                width: 100%;
-                border-radius: 130px;
-                text-align: start;
-                padding-left: 30px;
-              }
-            }
-          }
-        }
-      }
-    }
-    .operator-container {
-      ul {
-        padding: 0px;
-        list-style: none;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 10px;
-        li {
-          margin: 0px;
-          &:last-child {
-            grid-column: span 2;
-            button {
-              width: 100%;
-              border-radius: 130px;
-            }
-          }
-          &:nth-last-child(4) {
-            button {
-              font-size: 20px;
-            }
-          }
-          &:nth-last-child(3) {
-            button {
-              font-size: 27px;
-            }
-          }
-          .active {
-            background-color: cyan;
-            color: rgb(245, 202, 10);
-          }
-          button {
-            background-color: rgb(245, 202, 10);
-            transition: background-color 0.3s, color 0.3s;
-            &:hover {
-              background-color: cyan;
-              color: rgb(245, 202, 10);
-            }
-            &:nth-last-child(3) {
-              font-size: 27px;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (min-device-width: 428px) and (max-device-width: 932px) and (orientation: landscape) {
-  main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    .display {
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      width: 545px;
-      height: 30vh;
-      color: white;
-      font-size: 50px;
+      margin: 0px;
       .errors {
         color: red;
         font-size: 24px;

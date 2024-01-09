@@ -19,6 +19,7 @@ const Сalculator: React.FC = () => {
   const [numberFirst, setNumberFirst] = useState<string>("0")
   const [numberSecond, setNumberSecond] = useState<string>("0")
   const [answer, setAnswer] = useState<string | Operation>(numberFirst)
+  const [answerTwo, setAnswerTwo] = useState<boolean>(false)
   const [operator, setOperator] = useState<Operation>(null);
   const [activeButton, setActiveButton] = useState<string | null>(null);
   const [reset, setReset] = useState<string>("AC");
@@ -53,10 +54,30 @@ const Сalculator: React.FC = () => {
       throw new Error("Неизвестный оператор");
     }
   };
+
+  const equalsClick = (): void => {
+    setActiveButton(null);
+    const { result, error } = equals(operator, numberFirst, numberSecond);
+      if (result && !error) {
+        setNumberSecond("0");
+        setNumberFirst(result);
+        setErrors("");
+        setOperator(null);
+        setAnswerTwo(true)
+      } else {
+      setErrors(error?.message || "")
+      }
+  }
+
+  const validOperator = (operator: Operation): void => {
+    if (operator != null) {
+      equalsClick()
+    }
+  }
   
   // Хук обновляет значение стейтов для своевременного отображение на экране + меняет . на , для корретного отображения
   useEffect(() => {
-    setAnswer((operator ? numberSecond : numberFirst).replace('.', '‚'));
+    setAnswer((operator ? (answerTwo ? numberFirst : numberSecond) : numberFirst).replace('.', '‚'));
   }, [numberFirst, numberSecond, operator]);
 
 // функция очистки стейтов (зброс калькулятора)
@@ -67,6 +88,7 @@ const Сalculator: React.FC = () => {
     setOperator(null)
     setReset("AC")
     setErrors("")
+    setAnswerTwo(false)
   };
 
 // HTML код
@@ -80,21 +102,21 @@ const Сalculator: React.FC = () => {
           <ul>
             {MRs.map((MR) => (
               <li key={MR}>
-                <button className='button-panel' onClick={() => calculateMR(MR ?? "" as MR, safeNumbers)}>{MR}</button>
+                <button className='button-panel' onClick={() => { setAnswerTwo(false); calculateMR(MR ?? "" as MR, safeNumbers) }}>{MR}</button>
               </li>
             ))}
             <li><button className='button-panel' onClick={() => { clearAllState(); setActiveButton(null); setSafeNumbers([]) }}>{reset}</button></li>
             <li>
-              <button onClick={() => (operator ? setNumberSecond : setNumberFirst)(`${NegativeNumbers(operator, numberFirst, numberSecond)}`)} className='button-panel'>
+              <button onClick={() => { setAnswerTwo(false); (operator ? setNumberSecond : setNumberFirst)(`${NegativeNumbers(operator, numberFirst, numberSecond)}`) }} className='button-panel'>
                 <span>+</span>
                 <span>/</span>
                 <span>-</span>
               </button>
             </li>
-            <li><button onClick={() => (operator ? setNumberSecond : setNumberFirst)(`${interestCalculation(operator, numberFirst, numberSecond)}`)} className='button-panel'>%</button></li>
+            <li><button onClick={() => {setAnswerTwo(false); (operator ? setNumberSecond : setNumberFirst)(`${interestCalculation(operator, numberFirst, numberSecond)}`)}} className='button-panel'>%</button></li>
             {numbers.map((number) => (
               <li key={number}>
-                <button className='button-panel' onClick={() => { (operator ? setNumberSecond : setNumberFirst)(`${saveNumberClick(number, numberFirst, numberSecond, operator)}`); setActiveButton(null); operator ?? setReset("C"); }}>{number}</button>
+                <button className='button-panel' onClick={() => { setAnswerTwo(false); (operator ? setNumberSecond : setNumberFirst)(`${saveNumberClick(number, numberFirst, numberSecond, operator)}`); setActiveButton(null); operator ?? setReset("C"); }}>{number}</button>
               </li>
             ))}
           </ul>
@@ -103,21 +125,13 @@ const Сalculator: React.FC = () => {
           <ul>
             {operators.map((operator) => (
               <li key={operator}>
-                <button className={activeButton === operator ? "active button-operator" : "button-operator"} onClick={() => { setOperator(operator as Operation); setActiveButton(operator) }}>{operator}</button>
+                <button className={activeButton === operator ? "active button-operator" : "button-operator"} onClick={() => { setAnswerTwo(false); validOperator(operator as Operation); setOperator(operator as Operation); setActiveButton(operator); }}>{operator}</button>
               </li>
             ))}
             <li>
               <button className="button-operator" onClick={() => {
                 setActiveButton(null);
-                const { result, error } = equals(operator, numberFirst, numberSecond);
-                if (result && !error) {
-                  setNumberFirst(result);
-                  setNumberSecond("0");
-                  setOperator(null);
-                  setErrors("");
-                } else {
-                setErrors(error?.message || "")
-                }
+                equalsClick()
               }}>=</button>
             </li>
           </ul>
