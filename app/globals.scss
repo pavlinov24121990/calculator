@@ -183,7 +183,22 @@ main {
   main {
     .display {
       height: 15vh;
+      margin: 0px;
     }
+  }
+  .button-panel button {
+    text-align: center;
+  }
+  .button-panel button {
+    box-sizing: border-box;
+  }
+  .main-conteiner,
+  .display {
+    align-items: center;
+  }
+  .button-panel button {
+    font-size: 24px;
+    line-height: 1.2;
   }
 }
 
@@ -198,7 +213,7 @@ main {
       align-items: flex-end;
       justify-content: flex-end;
       width: 620px;
-      height: 25vh;
+      height: 20vh;
       color: white;
       font-size: 50px;
       margin: 0px;
