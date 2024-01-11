@@ -17,8 +17,8 @@ main {
   flex-direction: column;
   .display {
     display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
+    align-items: end;
+    justify-content: end;
     width: 300px;
     height: 25vh;
     color: white;
@@ -186,20 +186,6 @@ main {
       margin: 0px;
     }
   }
-  .button-panel button {
-    text-align: center;
-  }
-  .button-panel button {
-    box-sizing: border-box;
-  }
-  .main-conteiner,
-  .display {
-    align-items: center;
-  }
-  .button-panel button {
-    font-size: 24px;
-    line-height: 1.2;
-  }
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 900px) and (orientation: landscape) {
@@ -210,8 +196,8 @@ main {
     flex-direction: column;
     .display {
       display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
+      align-items: end;
+      justify-content: end;
       width: 620px;
       height: 20vh;
       color: white;
